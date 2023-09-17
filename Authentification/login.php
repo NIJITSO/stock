@@ -65,10 +65,7 @@ if (isset($_POST['ok'])) {
         $_SESSION['img'] = $client['imgUser'];
 
         if ($client['role'] == 'admin') {  // Add a check for admin role
-            header("Location: ../test/index.php");  // Redirect to dashboardd.php for admin
-        } else {
-            header("Location: ../index.php");  // Redirect to index.php for regular users
-        }
+            header("Location: ../test/index.php");  // Redirect to dashboardd.php for adminss
     }
 }
 
