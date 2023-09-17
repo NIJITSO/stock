@@ -154,38 +154,20 @@ form .form-row .textarea{
 require('../set.php');
 session_start();
 if (isset($_SESSION['updateId'])) {
-   $sql = "SELECT * FROM `items_table` WHERE `items_table`.`id` = '{$_SESSION['updateId']}'";
+   $sql = "SELECT * FROM `product` WHERE `product`.`idP` = '{$_SESSION['updateId']}'";
    $result = mysqli_query($conn, $sql);
    $data = mysqli_fetch_assoc($result);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Get the submitted form data
-   $catId = $_POST['cat'];
-   $title = $_POST['title'];
-   $date = $_POST['date'];
-   $price = $_POST['price'];
+   $nameProduct = $_POST['title'];
+   $quantite = $_POST['quantite'];
    $description = $_POST['description'];
 
-   // Check if a new image was uploaded
-   if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-      $image = $_FILES['image']['name'];
-      $targetDir = "../img/";
-      $targetFile = $targetDir . basename($image);
-
-      // Delete the old image if it exists
-      if (!empty($data['image']) && file_exists($targetDir . $data['image'])) {
-         unlink($targetDir . $data['image']);
-      }
-
-      move_uploaded_file($_FILES['image']['tmp_name'], $targetFile);
-   } else {
-      // If no new image was uploaded, use the existing image
-      $image = $data['image'];
-   }
 
    // Update the database with the new information
-   $sql = "UPDATE `items_table` SET `idCat` = '$catId', `image` = '$image', `title` = '$title', `date` = '$date', `price` = '$price', `description` = '$description' WHERE `id` = '{$_SESSION['updateId']}'";
+   $sql = "UPDATE `product` SET `nameP` = '$nameProduct',`qtyP` = '$quantite',`descP` = '$description' WHERE `idP` = '{$_SESSION['updateId']}'";
    mysqli_query($conn, $sql);
 
    // Redirect to a success page or perform any other necessary actions
@@ -195,62 +177,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <div class="container">
    <div class="text">
-      Update Cours
+      Update Produits
    </div>
    <form method="POST" enctype="multipart/form-data">
       <div class="input-data">
-         <select name="cat">
-            <?php
-            $sql = "SELECT * FROM categorie";
-            $result = mysqli_query($conn, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-               if ($data['idCat'] == $row['idCat']) {
-                  echo "<option selected value='{$row['idCat']}'>{$row['nameCat']}</option>";
-               } else {
-                  echo "<option value='{$row['idCat']}'>{$row['nameCat']}</option>";
-               }
-            }
-            ?>
-         </select>
       </div>
       <div class="form-row">
          <div class="input-data">
-            <img src="../img/<?=$data['image']?>" width="50">
-            <input type="file" name="image" value="">
+            <input type="text" name="title" value="<?=$data['nameP']?>">
             <div class="underline"></div>
-         </div>
-         <div class="input-data">
-            <input type="text" name="title" value="<?=$data['title']?>">
-            <div class="underline"></div>
-            <label for="">Titre du cour</label>
-         </div>
-         <div class="input-data">
-            <input type="date" name="date" value="<?=$data['date']?>">
-            <div class="underline"></div>
-            <label id="date" for="">Date d'ajoute</label>
+            <label for="">Titre du Produit</label>
          </div>
       </div>
-      <div class="form-row">
-         <div class="input-data">
-            <input type="number" step="0.01" name="price" min="0" value="<?=$data['price']?>">
-            <div class="underline"></div>
-         </div>
-      </div>
+
       <div class="form-row">
          <div class="input-data textarea">
-            <textarea name="description" rows="8" cols="80"><?=$data['description']?></textarea>
+            <textarea name="description" rows="8" cols="80"><?=$data['descP']?></textarea>
             <br />
             <div class="underline"></div>
             <label for="">Description</label>
             <br />
 
-            <div class="form-row submit-btn">
+         </div>
+      </div>
+      <div class="form-row">
+          <div class="input-data">
+            <input type="text" name="quantite" value="<?=$data['qtyP']?>">
+            <div class="underline"></div>
+            <label for="">Quantite du Produit</label>
+         </div>
+      </div>
+      <div class="form-row submit-btn">
                <div class="input-data">
                   <div class="inner"></div>
                   <input type="submit" value="Submit">
                </div>
             </div>
-         </div>
-      </div>
    </form>
 </div>

@@ -41,13 +41,14 @@ if (isset($_GET['deletIdCat'])) {
         padding: 10px 30px;
      }   
     </style>
+    <script defer src="js/script.js"></script>
 </head>
  
 <body>
 <?php
-$inf="SELECT SUM(price) AS `totalCost`, COUNT(id) AS `totalCourses` FROM `items_table`";
-$r=mysqli_query($conn, $inf);
-$d=mysqli_fetch_assoc($r);
+// $inf="SELECT SUM(price) AS `totalCost`, COUNT(id) AS `totalCourses` FROM `items_table`";
+// $r=mysqli_query($conn, $inf);
+// $d=mysqli_fetch_assoc($r);
 
 
 
@@ -114,7 +115,7 @@ $d=mysqli_fetch_assoc($r);
  
                 <div class="box box1">
                     <div class="text">
-                        <h2 class="topic-heading"><?=$d['totalCost']?></h2>
+                        <h2 class="topic-heading">90000</h2>
                         <h2 class="topic">Totale des Costs</h2>
                     </div>
  
@@ -125,7 +126,7 @@ $d=mysqli_fetch_assoc($r);
                 
                 <div class="box box2">
                     <div class="text">
-                        <h2 class="topic-heading"><?=$d['totalCourses']?></h2>
+                        <h2 class="topic-heading">500</h2>
                         <h2 class="topic">Nombre des Cours</h2>
                     </div>
  
@@ -147,22 +148,29 @@ $d=mysqli_fetch_assoc($r);
                         <th>Cours</th>
                         <th>Titre</th>
                         <th>Prix</th>
+                        <th>Quantity</th>
                         <th>Modifier</th>
                         <th>Supprimer</th>
                     </tr>
                     <div class="items">
                     <?php
                     require('../set.php');
-                    $sql = "SELECT * FROM items_table";
+                    $sql = "SELECT * FROM `product`";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
                     ?>
                         <tr> 
-                            <th>Cource id: <b><?=$row['id']?></b></th>
-                            <th><?=$row['title']?></th>
-                            <th><?=$row['price']?> DH</th>
-                            <th><a href="index.php?updateId=<?=$row['id']?>"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" version="1.1" id="Capa_1" width="20px" height="20px" viewBox="0 0 420.827 420.827" xml:space="preserve">
+                            <th>Cource id: <b><?=$row['idP']?></b></th>
+                            <th><?=$row['nameP']?></th>
+                            <th>0 DH</th>
+                            <th><?php
+                            if ($row['hasVariables']==0) {
+                                echo $row['qtyP'];
+                            }else{
+                                echo "<a href='detais_product.php'>Voir Tous</a>";
+                            }?></th>
+                            <th><a href="index.php?updateId=<?=$row['idP']?>"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" version="1.1" id="Capa_1" width="20px" height="20px" viewBox="0 0 420.827 420.827" xml:space="preserve">
 <g>
     <g>
         <path d="M210.29,0C156,0,104.43,20.693,65.077,58.269C25.859,95.715,2.794,146.022,0.134,199.921    c-0.135,2.734,0.857,5.404,2.744,7.388c1.889,1.983,4.507,3.105,7.244,3.105h45.211c5.275,0,9.644-4.098,9.979-9.362    c4.871-76.214,68.553-135.914,144.979-135.914c80.105,0,145.275,65.171,145.275,145.276c0,80.105-65.17,145.276-145.275,145.276    c-18.109,0-35.772-3.287-52.501-9.771l17.366-15.425c2.686-2.354,3.912-5.964,3.217-9.468c-0.696-3.506-3.209-6.371-6.592-7.521    l-113-32.552c-3.387-1.149-7.122-0.407-9.81,1.948c-2.686,2.354-3.913,5.963-3.218,9.467L69.71,403.157    c0.696,3.505,3.209,6.372,6.591,7.521c3.383,1.147,7.122,0.408,9.81-1.946l18.599-16.298    c31.946,18.574,68.456,28.394,105.581,28.394c116.021,0,210.414-94.392,210.414-210.414C420.705,94.391,326.312,0,210.29,0z"/>
@@ -170,7 +178,7 @@ $d=mysqli_fetch_assoc($r);
     </g>
 </g>
 </svg></a></th>
-                            <th><a href="index.php?deletId=<?=$row['id']?>"><svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="122.881px" height="122.88px" viewBox="0 0 122.881 122.88" enable-background="new 0 0 122.881 122.88" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M61.44,0c33.933,0,61.441,27.507,61.441,61.439 c0,33.933-27.508,61.44-61.441,61.44C27.508,122.88,0,95.372,0,61.439C0,27.507,27.508,0,61.44,0L61.44,0z M81.719,36.226 c1.363-1.363,3.572-1.363,4.936,0c1.363,1.363,1.363,3.573,0,4.936L66.375,61.439l20.279,20.278c1.363,1.363,1.363,3.573,0,4.937 c-1.363,1.362-3.572,1.362-4.936,0L61.44,66.376L41.162,86.654c-1.362,1.362-3.573,1.362-4.936,0c-1.363-1.363-1.363-3.573,0-4.937 l20.278-20.278L36.226,41.162c-1.363-1.363-1.363-3.573,0-4.936c1.363-1.363,3.573-1.363,4.936,0L61.44,56.504L81.719,36.226 L81.719,36.226z"/></g></svg></a></th>
+                            <th><a href="index.php?deletId=<?=$row['idP']?>"><svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="122.881px" height="122.88px" viewBox="0 0 122.881 122.88" enable-background="new 0 0 122.881 122.88" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M61.44,0c33.933,0,61.441,27.507,61.441,61.439 c0,33.933-27.508,61.44-61.441,61.44C27.508,122.88,0,95.372,0,61.439C0,27.507,27.508,0,61.44,0L61.44,0z M81.719,36.226 c1.363-1.363,3.572-1.363,4.936,0c1.363,1.363,1.363,3.573,0,4.936L66.375,61.439l20.279,20.278c1.363,1.363,1.363,3.573,0,4.937 c-1.363,1.362-3.572,1.362-4.936,0L61.44,66.376L41.162,86.654c-1.362,1.362-3.573,1.362-4.936,0c-1.363-1.363-1.363-3.573,0-4.937 l20.278-20.278L36.226,41.162c-1.363-1.363-1.363-3.573,0-4.936c1.363-1.363,3.573-1.363,4.936,0L61.44,56.504L81.719,36.226 L81.719,36.226z"/></g></svg></a></th>
                         </tr>
                      <?php }}?>
                     </div>
@@ -211,7 +219,6 @@ $d=mysqli_fetch_assoc($r);
             </div>
         </div>
     </div>
- 
-    <script src="js/script.js"></script>
+
 </body>
 </html>
