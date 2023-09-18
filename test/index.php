@@ -45,17 +45,6 @@ if (isset($_GET['deletIdCat'])) {
 </head>
  
 <body>
-<?php
-// $inf="SELECT SUM(price) AS `totalCost`, COUNT(id) AS `totalCourses` FROM `items_table`";
-// $r=mysqli_query($conn, $inf);
-// $d=mysqli_fetch_assoc($r);
-
-
-
-
-
-
-?>
     <!-- for header part -->
     <header>
  
@@ -127,7 +116,7 @@ if (isset($_GET['deletIdCat'])) {
                 <div class="box box2">
                     <div class="text">
                         <h2 class="topic-heading">500</h2>
-                        <h2 class="topic">Nombre des Cours</h2>
+                        <h2 class="topic">Nombre des Produits</h2>
                     </div>
  
                     <img src=
@@ -138,14 +127,14 @@ if (isset($_GET['deletIdCat'])) {
  
             <div class="report-container">
                 <div class="report-header">
-                    <h1 class="recent-Articles">Cours</h1>
-                    <a href="add.php"><button class="view" style="width: 150px;">Ajouter Cours</button></a>
+                    <h1 class="recent-Articles">Produits</h1>
+                    <a href="add.php"><button class="view" style="width: 150px;">Ajouter Produits</button></a>
                 </div>
  
                 <div class="report-body">
                     <table cellpadding="10" cellspacing="0">
                     <tr>
-                        <th>Cours</th>
+                        <th>Produits</th>
                         <th>Titre</th>
                         <th>Prix</th>
                         <th>Quantity</th>
@@ -161,14 +150,14 @@ if (isset($_GET['deletIdCat'])) {
                     while ($row = mysqli_fetch_assoc($result)) {
                     ?>
                         <tr> 
-                            <th>Cource id: <b><?=$row['idP']?></b></th>
+                            <th>Produitce id: <b><?=$row['idP']?></b></th>
                             <th><?=$row['nameP']?></th>
                             <th>0 DH</th>
                             <th><?php
                             if ($row['hasVariables']==0) {
                                 echo $row['qtyP'];
                             }else{
-                                echo "<a href='detais_product.php'>Voir Tous</a>";
+                                echo '<a href="product_detail.php?product_detail=' . $row['idP'] . '">Voir Tous</a>';
                             }?></th>
                             <th><a href="index.php?updateId=<?=$row['idP']?>"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" version="1.1" id="Capa_1" width="20px" height="20px" viewBox="0 0 420.827 420.827" xml:space="preserve">
 <g>
@@ -189,29 +178,29 @@ if (isset($_GET['deletIdCat'])) {
 
             <div class="report-container">
                 <div class="report-header">
-                    <h1 class="recent-Articles">Categorie</h1>
-                    <a href="addCat.php"><button class="view" style="width: 150px;">Ajouter Categorie</button></a>
+                    <h1 class="recent-Articles">Sizes</h1>
+                    <a href="addCat.php"><button class="view" style="width: 150px; margin-right: 40px;">Ajouter Size</button></a>
                 </div>
  
                 <div class="report-body">
                     <table>
                         <tr>
-                            <th class="t-op">Categories</th>
-                            <th class="t-op">Titre du Categorie</th>
+                            <th class="t-op">ID Size</th>
+                            <th class="t-op">Titre du Size</th>
                             <th class="t-op">Supprimer</th>
                         </tr>
 
                     <?php
                     require('../set.php');
-                    $sql = "SELECT * FROM categorie";
+                    $sql = "SELECT * FROM `size`";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
                     ?>
                       <tr>
-                            <th class="t-op-nextlvl">categorie id: <b><?=$row['idCat']?></b></th>
-                            <th class="t-op-nextlvl"><?=$row['nameCat']?></th>
-                            <th class="t-op-nextlvl"><a href="index.php?deletIdCat=<?=$row['idCat']?>"><svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="122.881px" height="122.88px" viewBox="0 0 122.881 122.88" enable-background="new 0 0 122.881 122.88" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M61.44,0c33.933,0,61.441,27.507,61.441,61.439 c0,33.933-27.508,61.44-61.441,61.44C27.508,122.88,0,95.372,0,61.439C0,27.507,27.508,0,61.44,0L61.44,0z M81.719,36.226 c1.363-1.363,3.572-1.363,4.936,0c1.363,1.363,1.363,3.573,0,4.936L66.375,61.439l20.279,20.278c1.363,1.363,1.363,3.573,0,4.937 c-1.363,1.362-3.572,1.362-4.936,0L61.44,66.376L41.162,86.654c-1.362,1.362-3.573,1.362-4.936,0c-1.363-1.363-1.363-3.573,0-4.937 l20.278-20.278L36.226,41.162c-1.363-1.363-1.363-3.573,0-4.936c1.363-1.363,3.573-1.363,4.936,0L61.44,56.504L81.719,36.226 L81.719,36.226z"/></g></svg></a></th>
+                            <th class="t-op-nextlvl">categorie id: <b><?=$row['idSize']?></b></th>
+                            <th class="t-op-nextlvl"><?=$row['sizeValue']?></th>
+                            <th class="t-op-nextlvl"><a href="index.php?deletIdCat=<?=$row['idSize']?>"><svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="122.881px" height="122.88px" viewBox="0 0 122.881 122.88" enable-background="new 0 0 122.881 122.88" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M61.44,0c33.933,0,61.441,27.507,61.441,61.439 c0,33.933-27.508,61.44-61.441,61.44C27.508,122.88,0,95.372,0,61.439C0,27.507,27.508,0,61.44,0L61.44,0z M81.719,36.226 c1.363-1.363,3.572-1.363,4.936,0c1.363,1.363,1.363,3.573,0,4.936L66.375,61.439l20.279,20.278c1.363,1.363,1.363,3.573,0,4.937 c-1.363,1.362-3.572,1.362-4.936,0L61.44,66.376L41.162,86.654c-1.362,1.362-3.573,1.362-4.936,0c-1.363-1.363-1.363-3.573,0-4.937 l20.278-20.278L36.226,41.162c-1.363-1.363-1.363-3.573,0-4.936c1.363-1.363,3.573-1.363,4.936,0L61.44,56.504L81.719,36.226 L81.719,36.226z"/></g></svg></a></th>
                         </tr>
                      <?php }}?>
                     </table>

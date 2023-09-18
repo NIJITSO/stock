@@ -157,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Get the submitted form data
    $title = $_POST['title'];
 
-    $sql ="INSERT INTO `categorie` (`idCat`, `nameCat`) VALUES (NULL, '$title');";
+    $sql ="INSERT INTO `size` (`idSize`, `sizeValue`) VALUES (NULL, '$title');";
     mysqli_query($conn, $sql);
 
    // Redirect to a success page or perform any other necessary actions
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <div class="container">
    <div class="text">
-      Add Categorie
+      Ajouter un Size
    </div>
    <form method="POST" enctype="multipart/form-data">
       <div class="form-row">
@@ -175,9 +175,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          <div class="input-data">
             <input type="text" name="title">
             <div class="underline"></div>
-            <label for="">Titre du cour</label>
+            <label for="">SIZE value</label>
             <br>
-            <input type="submit" value="Add Categorie" style="cursor: pointer;">
+            <input type="submit" value="Add Size" style="cursor: pointer;">
          </div>
          <br>
         <div class="form-row submit-btn">
