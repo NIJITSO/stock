@@ -40,7 +40,7 @@ if (isset($_GET['product_detail'])) {
     <meta name="viewport"
           content="width=device-width,
                    initial-scale=1.0">
-    <title>netserv</title>
+    <title>Hamza</title>
     <link rel="stylesheet"
           href="css/style.css">
 
@@ -142,8 +142,6 @@ if (isset($_GET['product_detail'])) {
                 <div class="report-body">
                     <table cellpadding="10" cellspacing="0">
                         <tr>
-                            <th class="t-op">Produit ID</th>
-                            <th class="t-op">Titre du Produit</th>
                             <th class="t-op">Taill du produits(Size)</th>
                             <th class="t-op">Quantite</th>
                         </tr>
@@ -152,14 +150,13 @@ if (isset($_GET['product_detail'])) {
                             FROM product_detail pd
                             JOIN product p ON pd.idP = p.idP
                             JOIN size s ON pd.idSize = s.idSize
-                            WHERE p.idP=$prodID";
+                            WHERE p.idP=$prodID ORDER BY s.sizeValue";
                             $result = mysqli_query($conn, $q);
                             if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                         ?>
                         <tr>
-                            <th class="t-op-nextlvl"><?=$row['idX']?></th>
-                            <th class="t-op-nextlvl"><?=$row['nameX']?></th>
+
                             <th class="t-op-nextlvl"><?=$row['sizeValueX']?></th>
                             <th class="t-op-nextlvl"><?=$row['qtyX']?></th>
                         </tr>

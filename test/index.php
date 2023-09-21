@@ -12,6 +12,10 @@ if (isset($_GET['updateId'])) {
     $_SESSION['updateId']=$_GET['updateId'];
     header("Location: update.php");
 }
+if (isset($_GET['updateIdVariable'])) {
+    $_SESSION['updateVariable']=$_GET['updateIdVariable'];
+    header("Location: updateVariable.php");
+}
 if (isset($_GET['deletIdCat'])) {
     $_SESSION['deletIdCat']=$_GET['deletIdCat'];
     header("Location: deletCat.php");
@@ -32,7 +36,7 @@ if (isset($_GET['deletIdCat'])) {
     <meta name="viewport"
           content="width=device-width,
                    initial-scale=1.0">
-    <title>netserv</title>
+    <title>Hamza</title>
     <link rel="stylesheet"
           href="css/style.css">
 
@@ -136,7 +140,6 @@ if (isset($_GET['deletIdCat'])) {
                     <tr>
                         <th>Produits</th>
                         <th>Titre</th>
-                        <th>Prix</th>
                         <th>Quantity</th>
                         <th>Modifier</th>
                         <th>Supprimer</th>
@@ -152,14 +155,20 @@ if (isset($_GET['deletIdCat'])) {
                         <tr> 
                             <th>Produitce id: <b><?=$row['idP']?></b></th>
                             <th><?=$row['nameP']?></th>
-                            <th>0 DH</th>
                             <th><?php
                             if ($row['hasVariables']==0) {
                                 echo $row['qtyP'];
                             }else{
                                 echo '<a href="product_detail.php?product_detail=' . $row['idP'] . '">Voir Tous</a>';
                             }?></th>
-                            <th><a href="index.php?updateId=<?=$row['idP']?>"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" version="1.1" id="Capa_1" width="20px" height="20px" viewBox="0 0 420.827 420.827" xml:space="preserve">
+                            <th>
+                            <?php
+                            if ($row['hasVariables']==0) {
+                                 echo '<a href="index.php?updateId=' . $row['idP'] . '">';
+                            }else{
+                                echo '<a href="index.php?updateIdVariable=' . $row['idP'] . '">';
+                            }?>
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" version="1.1" id="Capa_1" width="20px" height="20px" viewBox="0 0 420.827 420.827" xml:space="preserve">
 <g>
     <g>
         <path d="M210.29,0C156,0,104.43,20.693,65.077,58.269C25.859,95.715,2.794,146.022,0.134,199.921    c-0.135,2.734,0.857,5.404,2.744,7.388c1.889,1.983,4.507,3.105,7.244,3.105h45.211c5.275,0,9.644-4.098,9.979-9.362    c4.871-76.214,68.553-135.914,144.979-135.914c80.105,0,145.275,65.171,145.275,145.276c0,80.105-65.17,145.276-145.275,145.276    c-18.109,0-35.772-3.287-52.501-9.771l17.366-15.425c2.686-2.354,3.912-5.964,3.217-9.468c-0.696-3.506-3.209-6.371-6.592-7.521    l-113-32.552c-3.387-1.149-7.122-0.407-9.81,1.948c-2.686,2.354-3.913,5.963-3.218,9.467L69.71,403.157    c0.696,3.505,3.209,6.372,6.591,7.521c3.383,1.147,7.122,0.408,9.81-1.946l18.599-16.298    c31.946,18.574,68.456,28.394,105.581,28.394c116.021,0,210.414-94.392,210.414-210.414C420.705,94.391,326.312,0,210.29,0z"/>
