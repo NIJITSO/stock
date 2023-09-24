@@ -50,7 +50,7 @@ foreach ($products as $product) {
         echo '<input class="custom-input" type="number" min="0" max="' . $product['qtyP'] . '" name="qtyProduct' . $j . '"><hr>';
         $j++;
     } else {
-        echo "<b>".$product['nameP'] . " ID=".$product['idP']."</b> PRIX UNITAIRE: <b>".$product['prixP'] . "DH </b> ".'<br>';
+        echo "<b>".$product['nameP'] . "</b> PRIX UNITAIRE: <b>".$product['prixP'] . "DH </b> ".'<br>';
         
         // Check if the product has variables (sizes)
         if ($product['hasVariables'] == 1) {
