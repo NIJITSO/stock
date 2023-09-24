@@ -2,6 +2,9 @@
 require("../set.php");
 
 session_start();
+if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
+  header('Location: ../Authentification/');
+}
 $idT = $_SESSION['id'];
 $passT = $_SESSION['pass'];
 

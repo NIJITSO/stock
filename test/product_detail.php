@@ -1,5 +1,9 @@
 <?php
 require('../set.php');
+session_start();
+if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
+  header('Location: ../Authentification/');
+}
 if (isset($_GET['product_detail'])) {
     $prodID=$_GET['product_detail'];
     $qp="SELECT * FROM `product` WHERE idP=$prodID";

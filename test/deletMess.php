@@ -1,6 +1,9 @@
 <?php
 require('../set.php');
 session_start();
+if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
+  header('Location: ../Authentification/');
+}
 if (isset($_SESSION['deletIdM'])) {
     $sql="DELETE FROM formulaire WHERE `formulaire`.`id` = '{$_SESSION['deletIdM']}'";
     echo $sql;

@@ -153,6 +153,9 @@ form .form-row .textarea{
 <?php
 require('../set.php');
 session_start();
+if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
+  header('Location: ../Authentification/');
+}
 if (isset($_SESSION['updateId'])) {
    $sql = "SELECT * FROM `product` WHERE `product`.`idP` = '{$_SESSION['updateId']}'";
    $result = mysqli_query($conn, $sql);
@@ -163,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Get the submitted form data
    $nameProduct = $_POST['title'];
    $quantite = $_POST['quantite'];
+   $prix = $_POST['prix'];
    $description = $_POST['description'];
 
 
@@ -196,6 +200,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <br />
             <div class="underline"></div>
             <label for="">Description</label>
+            <br />
+
+         </div>
+      </div>
+            <div class="form-row">
+         <div class="input-data textarea">
+            <input type="text" name="prix" value="<?=$data['prixP']?>">
+            <br />
+            <div class="underline"></div>
+            <label for="">Prix</label>
             <br />
 
          </div>

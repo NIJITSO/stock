@@ -1,6 +1,9 @@
 <?php
 require('../set.php');
 session_start();
+if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
+  header('Location: ../Authentification/');
+}
 $_SESSION['deletIdM']=null;
 
 if (isset($_GET['deletIdM'])) {

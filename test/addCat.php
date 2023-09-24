@@ -152,7 +152,10 @@ form .form-row .textarea{
 </style>
 <?php
 require('../set.php');
-
+session_start();
+if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
+  header('Location: ../Authentification/');
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    // Get the submitted form data
    $title = $_POST['title'];

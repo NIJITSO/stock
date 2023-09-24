@@ -1,6 +1,9 @@
 <?php
 require('../set.php');
 session_start();
+if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
+  header('Location: ../Authentification/');
+}
 $_SESSION['deletId']=null;
 $_SESSION['updateId']=null;
 $_SESSION['deletIdCat']=null;
@@ -20,7 +23,6 @@ if (isset($_GET['deletIdCat'])) {
     $_SESSION['deletIdCat']=$_GET['deletIdCat'];
     header("Location: deletCat.php");
 }
-
 
 ?>
 
@@ -53,7 +55,7 @@ if (isset($_GET['deletIdCat'])) {
     <header>
  
         <div class="logosec">
-            <div class="logo">NETSERV</div>
+            <div class="logo">Meghrib</div>
             <img src=
 "https://media.geeksforgeeks.org/wp-content/uploads/20221210182541/Untitled-design-(30).png"
                 class="icn menuicn"
@@ -141,6 +143,7 @@ if (isset($_GET['deletIdCat'])) {
                         <th>Produits</th>
                         <th>Titre</th>
                         <th>Quantity</th>
+                        <th>Prix</th>
                         <th>Modifier</th>
                         <th>Supprimer</th>
                     </tr>
@@ -161,6 +164,7 @@ if (isset($_GET['deletIdCat'])) {
                             }else{
                                 echo '<a href="product_detail.php?product_detail=' . $row['idP'] . '">Voir Tous</a>';
                             }?></th>
+                            <th><?=$row['prixP']?></th>
                             <th>
                             <?php
                             if ($row['hasVariables']==0) {
@@ -201,7 +205,7 @@ if (isset($_GET['deletIdCat'])) {
 
                     <?php
                     require('../set.php');
-                    $sql = "SELECT * FROM `size`";
+                    $sql = "SELECT * FROM `size` ORDER BY `size`.`idSize` ASC";
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {

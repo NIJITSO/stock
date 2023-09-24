@@ -1,7 +1,9 @@
 <?php
 require('../set.php');
 session_start();
-    if (true) {
+if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
+  header('Location: ../Authentification/');
+}    if (true) {
       $idT=$_SESSION['id'];
         $met="SELECT * FROM `users` WHERE idUser = '$idT'";
         $res=mysqli_query($conn,$met);
@@ -130,16 +132,6 @@ Copy code
                 alt="menu-icon">
         </div>
  
-        <div class="searchbar">
-            <input type="text"
-                   placeholder="Search">
-            <div class="searchbtn">
-              <img src=
-"https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                    class="icn srchicn"
-                    alt="search-icon">
-              </div>
-        </div>
         <div class="message">
             <div class="dp">
               <img src="../../imgUser/<?=$_SESSION['img']?>"

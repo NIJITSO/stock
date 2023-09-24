@@ -55,7 +55,6 @@
 require("../set.php");
 if (isset($_POST['ok'])) {
     $met = "SELECT * FROM `users` WHERE mail = '{$_POST['mail']}' AND pass = '{$_POST['password']}' ";
-    echo "$met";
     $exec = mysqli_query($conn, $met);
     if (mysqli_num_rows($exec) > 0) {
         $client = mysqli_fetch_assoc($exec);
@@ -65,7 +64,9 @@ if (isset($_POST['ok'])) {
         $_SESSION['img'] = $client['imgUser'];
 
         if ($client['role'] == 'admin') {  // Add a check for admin role
+            $_SESSION['role'] = $client['role'];
             header("Location: ../test/index.php");  // Redirect to dashboardd.php for admin
+
         } 
     }
 }
