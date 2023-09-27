@@ -44,6 +44,20 @@ while (isset($_POST['idP' . $i])) {
 <head>
     <title>Product Table</title>
     <style>
+
+        h1, h3 {
+            text-align: justify; /* Justify the text in headers */
+        }
+        body {
+            font-family: Arial, sans-serif; /* Choose a readable font */
+        }
+        h1 {
+            font-size: 24px; /* Adjust the font size for the h1 header */
+        }
+        h3 {
+            font-size: 18px; /* Adjust the font size for the h3 headers */
+        }
+
         table {
             border-collapse: collapse;
             width: 100%;
@@ -58,10 +72,26 @@ while (isset($_POST['idP' . $i])) {
         th {
             background-color: #f2f2f2;
         }
+        .container{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Sosiete</h1>
+        <h3>Nom: <?=$_POST['nameSosiete']?></h3>
+        <h3>Fix: <?=$_POST['telSosiete']?></h3>
+    </div>
+    <div class="container">
+        <h1>Devis</h1>
+    </div>
 <table>
+
+
     <thead>
         <tr>
             <th>idP</th>

@@ -19,13 +19,50 @@ if (mysqli_num_rows($result) > 0) {
 <head>
     <title>Product Checkbox Generator</title>
     <style>
-        /* Default style for the input field */
+        /* Reset default margin and padding for the entire page */
+        body {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        /* Apply a background color to the body */
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Style for the form container */
+        .form-container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for the product items */
+        .product-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        /* Style for the input field */
         .custom-input {
+            width: 100%;
             padding: 10px;
             font-size: 16px;
             border: 2px solid #ccc;
             background-color: white;
             color: #333;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* Style when input field is filled */
@@ -33,19 +70,46 @@ if (mysqli_num_rows($result) > 0) {
             background-color: #4CAF50; /* Green background */
             color: white; /* White text */
         }
+
+        /* Style for the "Verify the information" section */
+        .verify-section {
+            margin-top: 20px;
+        }
+
+        /* Style for the submit button */
+        .custom-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Style for the checkbox label */
+        .checkbox-label {
+            font-size: 16px;
+            color: #333; /* Dark gray */
+        }
+
+        /* Style for the checkbox */
+        .custom-checkbox {
+            margin-right: 5px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
 
 <form method="POST" action="work.php">
-        
+<h2>Devies informations</h2>   
 <?php
     $i = 1; // Reset the counter for each variable product
     $j=1;
 foreach ($products as $product) {
 
     if ($product['hasVariables'] == 0) {
-        echo  $product['nameP'] . ' || Quantite:  <b><u>' . $product['qtyP'] . '</u></b>  PRIX UNITAIRE: <b>'.$product['prixP'] . "DH </b> ";
+        echo  "<b>".$product['nameP'] . ' </b>|| Quantite:  <b><u>' . $product['qtyP'] . '</u></b>  PRIX UNITAIRE: <b>'.$product['prixP'] . "DH </b> ";
         echo '<input type="hidden" name="idProduct' . $j . '" value="' . $product['idP'] . '">';
         echo '<input class="custom-input" type="number" min="0" max="' . $product['qtyP'] . '" name="qtyProduct' . $j . '"><hr>';
         $j++;
@@ -82,7 +146,16 @@ foreach ($products as $product) {
 }
 
 ?>
+<h2>Societe informations</h2>
+Nom du Sosiete :<input type="text" name="nameSosiete" required>
+Fix du Sosiete :<input type="text" name="telSosiete" required>
+<hr><br>
+
+
 Verifier the informations: <input type="checkbox" required name="">
+
+<br><br>
+
 <input type="submit" name="ok">
 </form>
     <script>
