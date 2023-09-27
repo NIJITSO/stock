@@ -83,11 +83,17 @@ if (isset($_GET['deletIdCat'])) {
                             alt="dashboard">
                         <h3> Dashboard</h3>
                     </div></a>
-                    <a href="messages.php" style="all:unset;"><div class="nav-option option2">
+                    <a href="devis.php" style="all:unset;"><div class="nav-option option2">
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">
-                        <h3> Boite Reception</h3>
+                        <h3> Deis</h3>
+                    </div></a>
+                    <a href="devis_manager.php" style="all:unset;"><div class="nav-option option2">
+                        <img src="img/message.png"
+                            class="nav-img"
+                            alt="dashboard">
+                        <h3> Deis</h3>
                     </div></a>
  
                     <a href="edit_profile_admin.php" style="all:unset;"><div class="nav-option option2">
