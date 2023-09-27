@@ -47,8 +47,7 @@ if (isset($_GET['order_id'])) {
         .container{
             display: flex;
             width: 100%;
-            flex-direction: column;
-            align-items: flex-start;
+            justify-content: space-between;
         }
 
         /* CSS to hide the divs by default */
@@ -111,11 +110,17 @@ if (isset($_GET['order_id'])) {
                             alt="dashboard">
                         <h3> Dashboard</h3>
                     </div></a>
+                    <a href="devis.php" style="all:unset;"><div class="nav-option option2">
+                        <img src="img/message.png"
+                            class="nav-img"
+                            alt="dashboard">
+                        <h3> Ajouter Un devis</h3>
+                    </div></a>
                     <a href="devis.php" style="all:unset;"><div class="nav-option option1">
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">
-                        <h3> Devis</h3>
+                        <h3> Devis manager</h3>
                     </div></a>
  
                     <a href="edit_profile_admin.php" style="all:unset;"><div class="nav-option option2">
@@ -135,16 +140,25 @@ if (isset($_GET['order_id'])) {
 <div class="main">
     <div class="container">
         <div>
-            <h1>Sosiete</h1>
-            <p>Nom: </p>
-            <p>Fix: </p>              
+            <div>
+                <div>
+                    <h1>Order Nr:<?=$orderID?></h1>
+                </div>
+            </div>
+            <h3>Sosiete</h3>
+            <p>buyer_name: <?=$orderData['buyer_name']?></p>
+            <p>mail_address: <?=$orderData['mail_address']?></p>
+            <p>Fix: <?=$orderData['phoneNumber']?></p>
+            <p>company_name: <?=$orderData['company_name']?></p>
+            <p>address: <?=$orderData['address']?></p>
         </div>
         <div>
-            <h1>Order Nr:<?=$orderID?></h1>
+            <h3><a href="print.php?order_id=<?=$orderID?>">Imprimer</a></h3>
         </div>
+
     </div>
     <div class="container">
-        <h1>Devis</h1>
+        <h3>Detait de Devis No: <?=$orderID?></h3>
     </div>
 <table>
     <thead>

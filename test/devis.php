@@ -24,6 +24,7 @@ if (mysqli_num_rows($result) > 0) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         /* CSS to hide the divs by default */
         #Product div {
@@ -32,9 +33,11 @@ if (mysqli_num_rows($result) > 0) {
         #societe {
             display: block;
         }
+
+
+
     </style>
 <link rel="stylesheet" href="css/style.min.css">
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible"
           content="IE=edge">
@@ -89,13 +92,13 @@ if (mysqli_num_rows($result) > 0) {
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">
-                        <h3> Devis</h3>
+                        <h3> Ajouter Un devis</h3>
                     </div></a>
                     <a href="devis_manager.php" style="all:unset;"><div class="nav-option option2">
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">
-                        <h3> Deis</h3>
+                        <h3> Devis manager</h3>
                     </div></a>
  
                     <a href="edit_profile_admin.php" style="all:unset;"><div class="nav-option option2">
@@ -114,14 +117,42 @@ if (mysqli_num_rows($result) > 0) {
         </div>
         <div class="main">
             <h2>Filtring Produits</h2>   
-            <div id="show_hide_inputs">
-    <?php
-    foreach ($products as $product) {
-    ?>
-    <?=$product['nameP']?> <input type="checkbox" name="productCheckbox" data-target="<?=$product['idP']?>">  <br>
-    <?php }?>
-</div>
+                <div id="search">
+        <input type="text" id="searchInput" placeholder="9aleb 3la produits" name="">
+    </div>
+    <div id="show_hide_inputs">
+        <?php
+        foreach ($products as $product) {
+        ?>
+        <div class="product-row">
+            <label><?=$product['nameP']?></label> <input type="checkbox" name="productCheckbox" data-target="<?=$product['idP']?>">  <br>
+        </div>
+        <?php }?>
+    </div>
+    <hr>
+    <script>
+        $(document).ready(function () {
+            // Hide all product rows initially
+            $('.product-row').hide();
 
+            $('#searchInput').on('input', function () {
+                var searchText = $(this).val().trim().toLowerCase();
+
+                // Hide all product rows
+                $('.product-row').hide();
+
+                // Show product rows that have at least one character in common with the search text
+                if (searchText !== "") {
+                    $('.product-row').each(function () {
+                        var label = $(this).find('label').text().toLowerCase();
+                        if (label.indexOf(searchText) !== -1) {
+                            $(this).show();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 <form method="POST" action="work.php">
 <div id="Product">
 <h2>Devies informations</h2>   
@@ -188,12 +219,21 @@ foreach ($products as $product) {
     });
 </script>
 <div id="societe">
-    <h2>Societe informations</h2>
-    Nom du Sosiete :<input type="text" name="buyer_name" required>
-    mail_address du Sosiete :<input type="text" name="mail_address" required>
-    phoneNumber du Sosiete :<input type="text" name="phoneNumber" required>
-    company_name du Sosiete :<input type="text" name="company_name" required>
-    address du Sosiete :<input type="text" name="address" required> 
+<h2>Societe informations</h2>
+  <label for="buyer_name">Nom du Société :</label>
+  <input type="text" name="buyer_name" required><br>
+  
+  <label for="mail_address">Mail Address du Société :</label>
+  <input type="email" name="mail_address" required><br>
+  
+  <label for="phoneNumber">Phone Number du Société :</label>
+  <input type="text" name="phoneNumber" required><br>
+  
+  <label for="company_name">Company Name du Société :</label>
+  <input type="text" name="company_name" required><br>
+  
+  <label for="address">Address du Société :</label>
+  <input type="text" name="address" required><br> 
     <hr><br>
 </div>
 

@@ -177,7 +177,13 @@ while (isset($_POST['idP' . $i])) {
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">
-                        <h3> Devis</h3>
+                        <h3> Ajouter Un devis</h3>
+                    </div></a>
+                    <a href="devis_manager.php" style="all:unset;"><div class="nav-option option2">
+                        <img src="img/message.png"
+                            class="nav-img"
+                            alt="dashboard">
+                        <h3> Devis manager</h3>
                     </div></a>
  
                     <a href="edit_profile_admin.php" style="all:unset;"><div class="nav-option option2">

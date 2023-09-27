@@ -18,6 +18,7 @@ if (mysqli_num_rows($result) > 0) {
 <html>
 <head>
     <title>Product Checkbox Generator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         /* CSS to hide the divs by default */
         #Product div {
@@ -29,6 +30,42 @@ if (mysqli_num_rows($result) > 0) {
     </style>
 </head>
 <body>
+    <div id="search">
+        <input type="text" id="searchInput" name="">
+    </div>
+    <div id="show_hide_inputs">
+        Laptop <input type="checkbox" name="productCheckbox" data-target="1">  <br>
+        RED Bobin <input type="checkbox" name="productCheckbox" data-target="2">  <br>
+        GREEN Bobin <input type="checkbox" name="productCheckbox" data-target="3">  <br>
+        Desktop <input type="checkbox" name="productCheckbox" data-target="4">  <br>
+        Btata <input type="checkbox" name="productCheckbox" data-target="25">  <br>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Hide all checkboxes initially
+            $('input[type="checkbox"]').hide();
+
+            $('#searchInput').on('input', function () {
+                var searchText = $(this).val().trim().toLowerCase();
+
+                // Hide all checkboxes
+                $('input[type="checkbox"]').hide();
+
+                // Show only checkboxes that match the search text
+                $('input[type="checkbox"]').each(function () {
+                    var label = $(this).prev().text().toLowerCase();
+                    if (label.includes(searchText)) {
+                        $(this).show();
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+
 <div id="show_hide_inputs">
     <?php
     foreach ($products as $product) {

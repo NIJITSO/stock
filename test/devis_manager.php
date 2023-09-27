@@ -30,7 +30,7 @@ if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
 
         th, td {
             border: 1px solid black;
-            padding: 8px;
+            padding: 4px;
             text-align: center;
         }
 
@@ -101,13 +101,13 @@ if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">
-                        <h3> Devis</h3>
+                        <h3> Ajouter Un devis</h3>
                     </div></a>
                     <a href="devis_manager.php" style="all:unset;"><div class="nav-option option1">
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">
-                        <h3> Deis</h3>
+                        <h3> Devis manager</h3>
                     </div></a>
  
                     <a href="edit_profile_admin.php" style="all:unset;"><div class="nav-option option2">
