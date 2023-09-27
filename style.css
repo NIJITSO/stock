@@ -1,0 +1,78 @@
+        /* Reset default margin and padding for the entire page */
+        body {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        /* Apply a background color to the body */
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Style for the form container */
+        .form-container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for the product items */
+        .product-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        /* Style for the input field */
+        .custom-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            background-color: white;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Style when input field is filled */
+        .filled {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+        }
+
+        /* Style for the "Verify the information" section */
+        .verify-section {
+            margin-top: 20px;
+        }
+
+        /* Style for the submit button */
+        .custom-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Style for the checkbox label */
+        .checkbox-label {
+            font-size: 16px;
+            color: #333; /* Dark gray */
+        }
+
+        /* Style for the checkbox */
+        .custom-checkbox {
+            margin-right: 5px;
+            vertical-align: middle;
+        }

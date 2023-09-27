@@ -2,9 +2,16 @@
 require('set.php');
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $sosiete="INSERT INTO orders (order_id, buyer_name, mail_address, phoneNumber, company_name, address, order_date, order_etat, prix_rest) VALUES (NULL, 'badr', 'badr@qwe', '070723241', 'MDWHITE', '123, Casa', '2023-09-24', 'encoure', 3000.00)";
+    $saveOrder=mysqli_query($conn, $sosiete);
+    $lastInsertedId = mysqli_insert_id($conn);
+
+
     
     $j = 1;
     $i = 1;
+    $k = 1;
+    $l = 1;
 while (isset($_POST["idProduct$j"])) {
     $idProductKey = "idProduct$j";
     $qtyProductKey = "qtyProduct$j";
@@ -12,8 +19,9 @@ while (isset($_POST["idProduct$j"])) {
     $qtyPP=$_POST["qtyProduct$j"];
     if (isset($_POST[$qtyProductKey]) && !empty($_POST[$qtyProductKey])) {
         $sql = "UPDATE product SET qtyP = qtyP - $qtyPP WHERE `product`.`idP` = $idPP";
+        $sql2 = "INSERT INTO order_detail (order_id, idP, idSize, Qty) VALUES ($lastInsertedId, $idPP, NULL, $qtyPP)";
         $exec=mysqli_query($conn, $sql);
-
+        $exec2=mysqli_query($conn, $sql2);
     }
 
     $j++;
@@ -29,13 +37,13 @@ while (isset($_POST['idP' . $i])) {
     if (isset($qty) && !empty($qty)) {
         //echo "id Du Produits : " . $idP . " id Du Size : " . $idSize . " La quantite du size : " . $qty . "<br>";
         $sql = "UPDATE product_detail SET qty = qty - {$qty} WHERE idP = {$idP} AND idSize = {$idSize}";
+        $sql2 = "INSERT INTO order_detail (order_id, idP, idSize, Qty) VALUES ($lastInsertedId, $idP, $idSize, $qty)";
         $exec=mysqli_query($conn, $sql);
-
+        $exec2=mysqli_query($conn, $sql2);
     }
 
     $i++;
 }
-
 
 }
 ?>
@@ -76,15 +84,15 @@ while (isset($_POST['idP' . $i])) {
             display: flex;
             width: 100%;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Sosiete</h1>
-        <h3>Nom: <?=$_POST['nameSosiete']?></h3>
-        <h3>Fix: <?=$_POST['telSosiete']?></h3>
+        <p>Nom: <?=$_POST['nameSosiete']?></p>
+        <p>Fix: <?=$_POST['telSosiete']?></p>
     </div>
     <div class="container">
         <h1>Devis</h1>
