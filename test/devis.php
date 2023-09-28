@@ -84,6 +84,9 @@ if (mysqli_num_rows($result) > 0) {
           href="css/style.css">
 
 	<style type="text/css">
+        body{
+            text-align: justify;
+        }
      td,th{
         padding: 10px 30px;
      }   

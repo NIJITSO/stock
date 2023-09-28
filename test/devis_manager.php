@@ -9,6 +9,61 @@ if (isset($_GET['delet_order'])) {
     header("Location: delet_order.php");
 }
 ?>
+<?php
+
+function buildPageUrl($pageNumber, $searchTerm, $searchDate) {
+    $url = "devis_manager.php?page={$pageNumber}";
+
+    if (!empty($searchTerm)) {
+        $url .= "&search={$searchTerm}";
+    }
+
+    if (!empty($searchDate)) {
+        $url .= "&searchDate={$searchDate}";
+    }
+
+    return $url;
+}
+
+// Define the number of records per page
+$recordsPerPage = 2;
+
+// Get the current page number from the query string or set it to 1 if not provided
+$pageNumber = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+// Get the search term from the query string if provided
+$searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
+
+// Get the search date from the query string if provided
+$searchDate = isset($_GET['searchDate']) ? mysqli_real_escape_string($conn, $_GET['searchDate']) : '';
+
+// Calculate the starting record for the current page
+$startFrom = ($pageNumber - 1) * $recordsPerPage;
+
+// Build the SQL query based on the search term and date
+$q = "SELECT * FROM `orders`";
+if (!empty($searchTerm) || !empty($searchDate)) {
+    $q .= " WHERE";
+    
+    if (!empty($searchTerm)) {
+        $q .= " `buyer_name` LIKE '%$searchTerm%' OR `company_name` LIKE '%$searchTerm%'";
+        
+        if (!empty($searchDate)) {
+            $q .= " AND";
+        }
+    }
+
+    if (!empty($searchDate)) {
+        $q .= " `order_date` = '$searchDate'";
+    }
+}
+
+// Add LIMIT and OFFSET clauses for pagination
+$q .= " LIMIT $recordsPerPage OFFSET $startFrom";
+
+$res = mysqli_query($conn, $q);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +101,22 @@ if (isset($_GET['delet_order'])) {
             flex-direction: column;
             align-items: flex-start;
         }
+.pagination {
+    margin-top: 20px;
+}
 
+.pagination a {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #007bff; /* Link color */
+}
+
+.pagination a.active {
+    background-color: #007bff; /* Active link background color */
+    color: #fff; /* Active link text color */
+}
     </style>
 <link rel="stylesheet" href="css/style.min.css">
 
@@ -128,27 +198,33 @@ if (isset($_GET['delet_order'])) {
             </nav>
         </div>
         <div class="main">
-<table>
-    <thead>
-        <tr>
-            <th>order_id (reference)</th>
-            <th>buyer_name</th>
-            <th>mail_address</th>
-            <th>phoneNumber</th>
-            <th>company_name</th>
-            <th>address</th>
-            <th>order_date</th>
-            <th>order_etat</th>
-            <th>prix_rest</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $q = "SELECT * FROM `orders`";
-        $res = mysqli_query($conn, $q);
-        while ($d = mysqli_fetch_assoc($res)) {
-                
+    <h1>Order List</h1>
+
+    <!-- Add a search bar -->
+    <form method="GET" action="devis_manager.php">
+        <input type="text" name="search" placeholder="Search by buyer or company...">
+        <input type="date" name="searchDate">
+        <input type="submit" value="Search">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>order_id (reference)</th>
+                <th>buyer_name</th>
+                <th>mail_address</th>
+                <th>phoneNumber</th>
+                <th>company_name</th>
+                <th>address</th>
+                <th>order_date</th>
+                <th>order_etat</th>
+                <th>prix_rest</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while ($d = mysqli_fetch_assoc($res)) {
                 echo '<tr>';
                 echo '<td><a href="order_id.php?order_id=' . $d['order_id'] . '">' . $d['order_id'] . '</a></td>';
                 echo '<td>' . $d['buyer_name'] . '</td>';
@@ -159,14 +235,48 @@ if (isset($_GET['delet_order'])) {
                 echo '<td>' . $d['order_date'] . '</td>';
                 echo '<td>' . $d['order_etat'] . '</td>';
                 echo '<td>' . $d['prix_rest'] . '</td>';
-                 echo '<td><a href="devis_manager.php?delet_order=' . $d['order_id'] . '">DELETE</a></td>';
+                echo '<td><a href="devis_manager.php?delet_order=' . $d['order_id'] . '">DELETE</a></td>';
                 echo '</tr>';
             }
-        ?>
+            ?>
 
-    </tbody>
-</table>
-        </div>
-    <script src="js/script.js"></script>
+        </tbody>
+    </table>
+
+    <!-- Create pagination links -->
+    <div class="pagination">
+        <?php
+        // Calculate the total number of pages
+        $totalRecordsQuery = "SELECT COUNT(*) as total FROM `orders`";
+        if (!empty($searchTerm) || !empty($searchDate)) {
+            $totalRecordsQuery .= " WHERE";
+            
+            if (!empty($searchTerm)) {
+                $totalRecordsQuery .= " `buyer_name` LIKE '%$searchTerm%' OR `company_name` LIKE '%$searchTerm%'";
+                
+                if (!empty($searchDate)) {
+                    $totalRecordsQuery .= " AND";
+                }
+            }
+
+            if (!empty($searchDate)) {
+                $totalRecordsQuery .= " `order_date` = '$searchDate'";
+            }
+        }
+
+        $totalRecordsResult = mysqli_query($conn, $totalRecordsQuery);
+        $totalRecords = mysqli_fetch_assoc($totalRecordsResult)['total'];
+
+        // Calculate the total number of pages
+        $totalPages = ceil($totalRecords / $recordsPerPage);
+
+        for ($i = 1; $i <= $totalPages; $i++) {
+            $url = buildPageUrl($i, $searchTerm, $searchDate);
+            $class = ($i == $pageNumber) ? 'active' : '';
+            echo "<a class='$class' href='$url'>$i</a>";
+        }
+        ?>
+    </div>
 </body>
+<script type="js/script.js"></script>
 </html>
