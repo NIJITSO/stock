@@ -116,7 +116,7 @@ if (isset($_GET['order_id'])) {
                             alt="dashboard">
                         <h3> Ajouter Un devis</h3>
                     </div></a>
-                    <a href="devis.php" style="all:unset;"><div class="nav-option option1">
+                    <a href="devis_manager.php" style="all:unset;"><div class="nav-option option1">
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">

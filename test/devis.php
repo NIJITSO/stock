@@ -178,12 +178,17 @@ if (mysqli_num_rows($result) > 0) {
 
                 // Show product rows that have at least one character in common with the search text
                 if (searchText !== "") {
-                    $('.product-row').each(function () {
-                        var label = $(this).find('label').text().toLowerCase();
-                        if (label.indexOf(searchText) !== -1) {
-                            $(this).show();
-                        }
-                    });
+                    if (searchText === "*") {
+                        // Show all product rows if '*' is entered
+                        $('.product-row').show();
+                    } else {
+                        $('.product-row').each(function () {
+                            var label = $(this).find('label').text().toLowerCase();
+                            if (label.indexOf(searchText) !== -1) {
+                                $(this).show();
+                            }
+                        });
+                    }
                 }
             });
         });

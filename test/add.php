@@ -75,6 +75,7 @@ if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
     No<input type="radio" id="noRadio" name="variable" value="no" checked />
     Yes<input type="radio" id="yesRadio" name="variable" value="yes" /><br>
     name Product:<input type="text" name="title" required><br>
+    Prix Product:<input type="text" name="price" required><br>
     quantite:<input type="number" min="0" name="quantite" id="quantityInput" required><br>
 
     <!-- Container for extra checkboxes -->
@@ -105,10 +106,10 @@ if (isset($_POST['title'])) {
 // echo "</pre>";
 if (isset($_POST['ok'])) {
     if ($_POST['variable']=='no') {
-        $insert="INSERT INTO `product` (`idP`, `nameP`, `descP`, `qtyP`, `hasVariables`) VALUES (NULL, '$title', NULL, {$_POST['quantite']}, 0)";
+        $insert="INSERT INTO `product` (`idP`, `nameP`, `descP`, `qtyP`,`prixP`, `hasVariables`) VALUES (NULL, '$title', NULL, {$_POST['quantite']}, {$_POST['price']},0)";
         $result = mysqli_query($conn, $insert);
     }else{
-        $insert="INSERT INTO `product` (`idP`, `nameP`, `descP`, `qtyP`, `hasVariables`) VALUES (NULL, '$title', NULL, NULL, 1)";
+        $insert="INSERT INTO `product` (`idP`, `nameP`, `descP`, `qtyP`,`prixP`, `hasVariables`) VALUES (NULL, '$title', NULL, NULL,{$_POST['price']}, 1)";
         $result = mysqli_query($conn, $insert);
         $lastInsertedId = mysqli_insert_id($conn);
         $size=$_POST['size'];

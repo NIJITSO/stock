@@ -4,6 +4,10 @@ session_start();
 if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
   header('Location: ../Authentification/');
 }
+if (isset($_GET['delet_order'])) {
+    $_SESSION['delet_order']=$_GET['delet_order'];
+    header("Location: delet_order.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -136,6 +140,7 @@ if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
             <th>order_date</th>
             <th>order_etat</th>
             <th>prix_rest</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -154,6 +159,7 @@ if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
                 echo '<td>' . $d['order_date'] . '</td>';
                 echo '<td>' . $d['order_etat'] . '</td>';
                 echo '<td>' . $d['prix_rest'] . '</td>';
+                 echo '<td><a href="devis_manager.php?delet_order=' . $d['order_id'] . '">DELETE</a></td>';
                 echo '</tr>';
             }
         ?>

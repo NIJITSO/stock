@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
    // Update the database with the new information
-   $sql = "UPDATE `product` SET `nameP` = '$nameProduct',`qtyP` = '$quantite',`descP` = '$description' WHERE `idP` = '{$_SESSION['updateId']}'";
+   $sql = "UPDATE `product` SET `nameP` = '$nameProduct',`qtyP` = '$quantite',`descP` = '$description',`prixP` = '$prix' WHERE `idP` = '{$_SESSION['updateId']}'";
    mysqli_query($conn, $sql);
 
    // Redirect to a success page or perform any other necessary actions
