@@ -144,13 +144,25 @@ Copy code
  
     <div class="main-container">
         <div class="navcontainer">
-                        <nav class="nav">
+            <nav class="nav">
                 <div class="nav-upper-options">
                     <a href="index.php" style="all:unset;"><div class="nav-option option2">
                         <img src="img/dashboard.jpg"
                             class="nav-img"
                             alt="dashboard">
                         <h3> Dashboard</h3>
+                    </div></a>
+                    <a href="devis.php" style="all:unset;"><div class="nav-option option2">
+                        <img src="img/message.png"
+                            class="nav-img"
+                            alt="dashboard">
+                        <h3> Ajouter Un devis</h3>
+                    </div></a>
+                    <a href="devis_manager.php" style="all:unset;"><div class="nav-option option2">
+                        <img src="img/message.png"
+                            class="nav-img"
+                            alt="dashboard">
+                        <h3> Devis manager</h3>
                     </div></a>
  
                     <a href="edit_profile_admin.php" style="all:unset;"><div class="nav-option option1">

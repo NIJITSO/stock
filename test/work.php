@@ -28,7 +28,7 @@ $company_name=$_POST['company_name'];
 $address=$_POST['address'];
 
 
-    $sosiete="INSERT INTO orders (order_id, buyer_name, mail_address, phoneNumber, company_name, address, order_etat, prix_rest) VALUES (NULL, '$buyer_name', '$mail_address', '$phoneNumber', '$company_name', 'address', 'encoure', 0.00)";
+    $sosiete="INSERT INTO orders (order_id, buyer_name, mail_address, phoneNumber, company_name, address, order_etat, prix_rest) VALUES (NULL, '$buyer_name', '$mail_address', '$phoneNumber', '$company_name', '$address', 'encoure', 0.00)";
     $saveOrder=mysqli_query($conn, $sosiete);
     $lastInsertedId = mysqli_insert_id($conn);
 

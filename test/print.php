@@ -18,12 +18,15 @@ if (isset($_GET['order_id'])) {
 // Create a PDF object
 $pdf = new FPDF();
 $pdf->AddPage();
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial', 'B', 18);
 
 // Add content to the PDF
 $pdf->Cell(0, 10, 'Order Nr: ' . $orderID, 0, 1, 'C');
+$pdf->SetFont('Arial', '', 12);
 $pdf->Ln(10);
+$pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, 10, 'Sosiete', 0, 1, 'L');
+$pdf->SetFont('Arial', '', 12);
 $pdf->Cell(0, 10, 'buyer_name: ' . $orderData['buyer_name'], 0, 1, 'L');
 $pdf->Cell(0, 10, 'mail_address: ' . $orderData['mail_address'], 0, 1, 'L');
 $pdf->Cell(0, 10, 'Fix: ' . $orderData['phoneNumber'], 0, 1, 'L');
@@ -31,6 +34,7 @@ $pdf->Cell(0, 10, 'company_name: ' . $orderData['company_name'], 0, 1, 'L');
 $pdf->Cell(0, 10, 'address: ' . $orderData['address'], 0, 1, 'L');
 
 $pdf->Ln(10);
+$pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, 10, 'Detait de Devis No: ' . $orderID, 0, 1, 'L');
 
 $pdf->SetFont('Arial', 'B', 12);
@@ -101,6 +105,7 @@ $pdf->Ln();
 		    $pdf->Ln();
 		}
 
+    
 		while ($d2 = mysqli_fetch_assoc($res2)) {
 		    $subtotal = $d2['PricePerUnit'] * $d2['Quantity']; // Calculate the subtotal for this row
 		    $total += $subtotal; // Add to the total
@@ -114,11 +119,12 @@ $pdf->Ln();
 		    $pdf->Ln();
 		}
 
+
 		$pdf->Ln(10);
 		$pdf->Cell(0, 10, 'TOTAL: ' . $total . ' DH', 0, 1, 'R');
 
 		// Output the PDF to the browser
-		$pdf->Output();
+		$pdf->Output('Order_' . $orderID . '.pdf', 'D');
 		        
         ?>
 

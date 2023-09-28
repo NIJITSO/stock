@@ -52,13 +52,18 @@
 </body>
 </html>
 <?php
+session_start();
+if(isset($_SESSION['id'])  ||  $_SESSION['role']==="admin"){
+    header('Location: ../test/index.php');
+}
 require("../set.php");
 if (isset($_POST['ok'])) {
     $met = "SELECT * FROM `users` WHERE mail = '{$_POST['mail']}' AND pass = '{$_POST['password']}' ";
     $exec = mysqli_query($conn, $met);
     if (mysqli_num_rows($exec) > 0) {
         $client = mysqli_fetch_assoc($exec);
-        session_start();
+        
+
         $_SESSION['id'] = $client['idUser'];
         $_SESSION['pass'] = $client['pass'];
         $_SESSION['img'] = $client['imgUser'];

@@ -30,8 +30,7 @@ if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
 
         th, td {
             border: 1px solid black;
-            padding: 4px;
-            text-align: center;
+            text-align: center;;
         }
 
         th {

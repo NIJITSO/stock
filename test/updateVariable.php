@@ -34,6 +34,10 @@ if (isset($_SESSION['updateVariable'])) {
 }
 
 // Process form submission
+
+// ... (your existing code)
+
+// Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve values from the submitted form
     $selectedOption = $_POST['variable'];
@@ -51,7 +55,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // You can perform database operations or other processing based on this data.
 
-    // For example, you can insert this data into your database.
+    // For example, you can update this data in your database for the selected product.
+    $productId = $_SESSION['updateVariable'];
+
+    // Update the product name
+    $updateProductNameSQL = "UPDATE product SET nameP = '$productName' WHERE idP = '$productId'";
+    mysqli_query($conn, $updateProductNameSQL);
+
+    // Update the quantities for selected sizes
+    foreach ($quantities as $sizeId => $quantityValue) {
+        $updateQuantitySQL = "UPDATE product_detail SET qty = '$quantityValue' WHERE idP = '$productId' AND idSize = '$sizeId'";
+        mysqli_query($conn, $updateQuantitySQL);
+    }
+
+    // Redirect to a success page or display a success message
+    header('Location: ../test/index.php');
+    exit;
 }
 ?>
 
