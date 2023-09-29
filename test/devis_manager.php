@@ -26,7 +26,7 @@ function buildPageUrl($pageNumber, $searchTerm, $searchDate) {
 }
 
 // Define the number of records per page
-$recordsPerPage = 2;
+$recordsPerPage = 6;
 
 // Get the current page number from the query string or set it to 1 if not provided
 $pageNumber = isset($_GET['page']) ? intval($_GET['page']) : 1;
