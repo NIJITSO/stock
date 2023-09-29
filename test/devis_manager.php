@@ -201,11 +201,11 @@ $res = mysqli_query($conn, $q);
     <h1>Order List</h1>
 
     <!-- Add a search bar -->
-    <form method="GET" action="devis_manager.php">
-        <input type="text" name="search" placeholder="Search by buyer or company...">
-        <input type="date" name="searchDate">
-        <input type="submit" value="Search">
-    </form>
+<form method="GET" action="devis_manager.php">
+    <input type="text" name="search" placeholder="Search by buyer or company..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+    <input type="date" name="searchDate" value="<?php echo isset($_GET['searchDate']) ? htmlspecialchars($_GET['searchDate']) : ''; ?>">
+    <input type="submit" value="Search">
+</form>
 
     <table>
         <thead>
@@ -243,7 +243,7 @@ $res = mysqli_query($conn, $q);
         </tbody>
     </table>
 
-    <!-- Create pagination links -->
+    <!-- Create pagination links with previous and next buttons -->
     <div class="pagination">
         <?php
         // Calculate the total number of pages
@@ -270,13 +270,29 @@ $res = mysqli_query($conn, $q);
         // Calculate the total number of pages
         $totalPages = ceil($totalRecords / $recordsPerPage);
 
+        // Calculate previous and next page numbers
+        $prevPage = ($pageNumber > 1) ? $pageNumber - 1 : 1;
+        $nextPage = ($pageNumber < $totalPages) ? $pageNumber + 1 : $totalPages;
+
+        // Output previous page button
+        if ($pageNumber > 1) {
+            echo "<a class='prev' href='" . buildPageUrl($prevPage, $searchTerm, $searchDate) . "'>&laquo; Previous</a>";
+        }
+
+        // Output numbered page links
         for ($i = 1; $i <= $totalPages; $i++) {
             $url = buildPageUrl($i, $searchTerm, $searchDate);
             $class = ($i == $pageNumber) ? 'active' : '';
             echo "<a class='$class' href='$url'>$i</a>";
         }
+
+        // Output next page button
+        if ($pageNumber < $totalPages) {
+            echo "<a class='next' href='" . buildPageUrl($nextPage, $searchTerm, $searchDate) . "'>Next &raquo;</a>";
+        }
         ?>
     </div>
+
 </body>
 <script type="js/script.js"></script>
 </html>
