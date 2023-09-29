@@ -14,7 +14,7 @@ if (isset($_SESSION['delet_order'])) {
             mysqli_query($conn, $sqlUpdate1);
 
         }else{
-           $sqlUpdate2 = "UPDATE `product_detail` SET `qty` = {$data['Qty']} WHERE `product_detail`.`idP` = {$data['idP']} AND `product_detail`.`idSize` = {$data['idSize']}";
+           $sqlUpdate2 = "UPDATE `product_detail` SET `qty` = `qty` + {$data['Qty']} WHERE `product_detail`.`idP` = {$data['idP']} AND `product_detail`.`idSize` = {$data['idSize']}";
             mysqli_query($conn, $sqlUpdate2);
         }
     }
