@@ -225,7 +225,7 @@ if (isset($_GET['order_id'])) {
                 echo '<td>' . $d['ProductName'] . '</td>';
                 echo '<td>-----</td>';
                 echo '<td>' . $d['PricePerUnit'] . ' DH</td>';
-                echo '<td>' . $d['Quantity'] . ' DH</td>';
+                echo '<td>' . $d['Quantity'] . '</td>';
                 echo '<td>' . $subtotal . '</td>';
                 echo '</tr>';
             }
@@ -242,7 +242,7 @@ if (isset($_GET['order_id'])) {
                 echo '<td>' . $d2['ProductName'] . '</td>';
                 echo '<td>' . $d2['Size'] . '</td>';
                 echo '<td>' . $d2['PricePerUnit'] . ' DH</td>';
-                echo '<td>' . $d2['Quantity'] . ' DH</td>';
+                echo '<td>' . $d2['Quantity'] . '</td>';
                 echo '<td>' . $subtotal . '</td>';
                 echo '</tr>';
             }
