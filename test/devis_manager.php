@@ -235,7 +235,7 @@ $res = mysqli_query($conn, $q);
                 echo '<td>' . $d['order_date'] . '</td>';
                 echo '<td>' . $d['order_etat'] . '</td>';
                 echo '<td>' . $d['prix_rest'] . '</td>';
-                echo '<td><a href="devis_manager.php?delet_order=' . $d['order_id'] . '">DELETE</a></td>';
+                echo '<td><a href="devis_manager.php?delet_order=' . $d['order_id'] . '">Canceler Le Devis</a></td>';
                 echo '</tr>';
             }
             ?>
