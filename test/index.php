@@ -6,7 +6,7 @@ if(!isset($_SESSION['id'])  ||  $_SESSION['role']!=="admin"){
 }
 $_SESSION['deletId']=null;
 $_SESSION['updateId']=null;
-$_SESSION['deletIdCat']=null;
+
 if (isset($_GET['deletId'])) {
     $_SESSION['deletId']=$_GET['deletId'];
     header("Location: delet.php");
@@ -19,12 +19,49 @@ if (isset($_GET['updateIdVariable'])) {
     $_SESSION['updateVariable']=$_GET['updateIdVariable'];
     header("Location: updateVariable.php");
 }
-if (isset($_GET['deletIdCat'])) {
-    $_SESSION['deletIdCat']=$_GET['deletIdCat'];
-    header("Location: deletCat.php");
+
+
+
+
+
+function buildPageUrl($pageNumber, $searchTerm) {
+    $url = "index.php?page={$pageNumber}";
+
+    if (!empty($searchTerm)) {
+        $url .= "&search={$searchTerm}";
+    }
+
+    return $url;
 }
 
+// Define the number of records per page
+$recordsPerPage = 25;
+
+// Get the current page number from the query string or set it to 1 if not provided
+$pageNumber = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+// Get the search term from the query string if provided
+$searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
+
+// Calculate the starting record for the current page
+$startFrom = ($pageNumber - 1) * $recordsPerPage;
+
+// Build the SQL query based on the search term
+$q = "SELECT * FROM `product`";
+if (!empty($searchTerm)) {
+    $q .= " WHERE `nameP` LIKE '%$searchTerm%' OR `descP` LIKE '%$searchTerm%'";
+}
+
+// Add LIMIT and OFFSET clauses for pagination
+$q .= " LIMIT $recordsPerPage OFFSET $startFrom";
+
+$res = mysqli_query($conn, $q);
+
+
 ?>
+
+
+
 
 
 <!DOCTYPE html>
@@ -46,20 +83,30 @@ if (isset($_GET['deletIdCat'])) {
      th,th{
         padding: 10px 30px;
      }
-    #toggleButton {
-        background-color: #007BFF;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-    }
 
-    #toggleButton:hover {
-        background-color: #0056b3;
-    }
+        /* Pagination styles */
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination a {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            text-decoration: none;
+            color: #007bff; /* Link color */
+        }
+
+        .pagination a.active {
+            background-color: #007bff; /* Active link background color */
+            color: #fff; /* Active link text color */
+        }
+
+        .pagination a.prev,
+        .pagination a.next {
+            font-weight: bold;
+        }
     </style>
     <script defer src="js/script.js"></script>
 </head>
@@ -96,6 +143,12 @@ if (isset($_GET['deletIdCat'])) {
                             class="nav-img"
                             alt="dashboard">
                         <h3> Dashboard</h3>
+                    </div></a>
+                    <a href="size.php" style="all:unset;"><div class="nav-option option2">
+                        <img src="img/dashboard.jpg"
+                            class="nav-img"
+                            alt="dashboard">
+                        <h3> Sisez</h3>
                     </div></a>
                     <a href="devis.php" style="all:unset;"><div class="nav-option option2">
                         <img src="img/message.png"
@@ -149,9 +202,13 @@ if (isset($_GET['deletIdCat'])) {
 "img/somme.png"
                          alt="likes">
                 </div>
- 
+
  
             <div class="report-container">
+                <form method="GET" action="index.php">
+                    <input type="text" name="search" placeholder="Search by buyer or company..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    <input type="submit" value="Search">
+                </form>
                 <div class="report-header">
                     <h1 class="recent-Articles">Produits</h1>
                     <a href="add.php"><button class="view" style="width: 150px;">Ajouter Produits</button></a>
@@ -170,10 +227,7 @@ if (isset($_GET['deletIdCat'])) {
                     <div class="items">
                     <?php
                     require('../set.php');
-                    $sql = "SELECT * FROM `product`";
-                    $result = mysqli_query($conn, $sql);
-                    if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
+                    while ($row = mysqli_fetch_assoc($res)) {
                     ?>
                         <tr> 
                             <th>Produitce id: <b><?=$row['idP']?></b></th>
@@ -202,73 +256,48 @@ if (isset($_GET['deletIdCat'])) {
 </svg></a></th>
                             <th><a href="index.php?deletId=<?=$row['idP']?>"><svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="122.881px" height="122.88px" viewBox="0 0 122.881 122.88" enable-background="new 0 0 122.881 122.88" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M61.44,0c33.933,0,61.441,27.507,61.441,61.439 c0,33.933-27.508,61.44-61.441,61.44C27.508,122.88,0,95.372,0,61.439C0,27.507,27.508,0,61.44,0L61.44,0z M81.719,36.226 c1.363-1.363,3.572-1.363,4.936,0c1.363,1.363,1.363,3.573,0,4.936L66.375,61.439l20.279,20.278c1.363,1.363,1.363,3.573,0,4.937 c-1.363,1.362-3.572,1.362-4.936,0L61.44,66.376L41.162,86.654c-1.362,1.362-3.573,1.362-4.936,0c-1.363-1.363-1.363-3.573,0-4.937 l20.278-20.278L36.226,41.162c-1.363-1.363-1.363-3.573,0-4.936c1.363-1.363,3.573-1.363,4.936,0L61.44,56.504L81.719,36.226 L81.719,36.226z"/></g></svg></a></th>
                         </tr>
-                     <?php }}?>
+                     <?php }?>
                     </div>
                 </div>
                 </table>
-            </div>
-            <button id="toggleButton">Show/Hide Size Report</button>
-
-            <div class="report-container" id="sizeReport" style="display: none;">
-                <div class="report-header">
-                    <h1 class="recent-Articles">Sizes</h1>
-                    <a href="addCat.php"><button class="view" style="width: 150px; margin-right: 40px;">Ajouter Size</button></a>
-                </div>
- 
-                <div class="report-body">
-                    <table>
-                        <tr>
-                            <th class="t-op">ID Size</th>
-                            <th class="t-op">Titre du Size</th>
-                            <th class="t-op">Supprimer</th>
-                        </tr>
-
+                <div class="pagination">
                     <?php
-                    require('../set.php');
-                    $sql = "SELECT * FROM `size` ORDER BY `size`.`idSize` ASC";
-                    $result = mysqli_query($conn, $sql);
-                    if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
+                    // Calculate the total number of pages
+                    $totalRecordsQuery = "SELECT COUNT(*) as total FROM `product`";
+                    if (!empty($searchTerm)) {
+                        $totalRecordsQuery .= " WHERE `nameP` LIKE '%$searchTerm%' OR `descP` LIKE '%$searchTerm%'";
+                    }
+                    $totalRecordsResult = mysqli_query($conn, $totalRecordsQuery);
+                    $totalRecords = mysqli_fetch_assoc($totalRecordsResult)['total'];
+
+                    // Calculate the total number of pages
+                    $totalPages = ceil($totalRecords / $recordsPerPage);
+
+                    // Calculate previous and next page numbers
+                    $prevPage = ($pageNumber > 1) ? $pageNumber - 1 : 1;
+                    $nextPage = ($pageNumber < $totalPages) ? $pageNumber + 1 : $totalPages;
+
+                    // Build URLs for previous and next pages
+                    $prevUrl = buildPageUrl($prevPage, $searchTerm);
+                    $nextUrl = buildPageUrl($nextPage, $searchTerm);
+
+                    // Display "Previous" button if not on the first page
+                    if ($pageNumber > 1) {
+                        echo "<a class='prev' href='$prevUrl'>Previous</a>";
+                    }
+
+                    for ($i = 1; $i <= $totalPages; $i++) {
+                        $url = buildPageUrl($i, $searchTerm);
+                        $class = ($i == $pageNumber) ? 'active' : '';
+                        echo "<a class='$class' href='$url'>$i</a>";
+                    }
+
+                    // Display "Next" button if not on the last page
+                    if ($pageNumber < $totalPages) {
+                        echo "<a class='next' href='$nextUrl'>Next</a>";
+                    }
                     ?>
-                      <tr>
-                            <th class="t-op-nextlvl">categorie id: <b><?=$row['idSize']?></b></th>
-                            <th class="t-op-nextlvl"><?=$row['sizeValue']?></th>
-                            <th class="t-op-nextlvl"><a href="index.php?deletIdCat=<?=$row['idSize']?>"><svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="122.881px" height="122.88px" viewBox="0 0 122.881 122.88" enable-background="new 0 0 122.881 122.88" xml:space="preserve"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M61.44,0c33.933,0,61.441,27.507,61.441,61.439 c0,33.933-27.508,61.44-61.441,61.44C27.508,122.88,0,95.372,0,61.439C0,27.507,27.508,0,61.44,0L61.44,0z M81.719,36.226 c1.363-1.363,3.572-1.363,4.936,0c1.363,1.363,1.363,3.573,0,4.936L66.375,61.439l20.279,20.278c1.363,1.363,1.363,3.573,0,4.937 c-1.363,1.362-3.572,1.362-4.936,0L61.44,66.376L41.162,86.654c-1.362,1.362-3.573,1.362-4.936,0c-1.363-1.363-1.363-3.573,0-4.937 l20.278-20.278L36.226,41.162c-1.363-1.363-1.363-3.573,0-4.936c1.363-1.363,3.573-1.363,4.936,0L61.44,56.504L81.719,36.226 L81.719,36.226z"/></g></svg></a></th>
-                        </tr>
-                     <?php }}?>
-                    </table>
                 </div>
-            </div>
-        </div>
     </div>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const sizeReport = document.getElementById("sizeReport");
-    const toggleButton = document.getElementById("toggleButton");
-
-    // Function to toggle visibility
-    function toggleVisibility() {
-        if (sizeReport.style.display === "none") {
-            sizeReport.style.display = "block";
-        } else {
-            sizeReport.style.display = "none";
-        }
-    }
-
-    // Toggle visibility on button click
-    toggleButton.addEventListener("click", function () {
-        toggleVisibility();
-        // Save the visibility state to localStorage
-        localStorage.setItem("sizeReportVisibility", sizeReport.style.display);
-    });
-
-    // Check localStorage for visibility state on page load
-    const storedVisibility = localStorage.getItem("sizeReportVisibility");
-    if (storedVisibility) {
-        sizeReport.style.display = storedVisibility;
-    }
-});
-</script>
-
 </body>
 </html>

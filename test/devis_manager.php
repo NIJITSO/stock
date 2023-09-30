@@ -170,7 +170,13 @@ $res = mysqli_query($conn, $q);
                             alt="dashboard">
                         <h3> Dashboard</h3>
                     </div></a>
-                    <a href="devis.php" style="all:unset;"><div class="nav-option option12">
+                    <a href="size.php" style="all:unset;"><div class="nav-option option2">
+                        <img src="img/dashboard.jpg"
+                            class="nav-img"
+                            alt="dashboard">
+                        <h3> Sisez</h3>
+                    </div></a>
+                    <a href="devis.php" style="all:unset;"><div class="nav-option option2">
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">

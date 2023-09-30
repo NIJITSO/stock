@@ -100,11 +100,23 @@ if (isset($_GET['product_detail'])) {
                             alt="dashboard">
                         <h3> Dashboard</h3>
                     </div></a>
-                    <a href="messages.php" style="all:unset;"><div class="nav-option option2">
+                    <a href="size.php" style="all:unset;"><div class="nav-option option2">
+                        <img src="img/dashboard.jpg"
+                            class="nav-img"
+                            alt="dashboard">
+                        <h3> Sisez</h3>
+                    </div></a>
+                    <a href="devis.php" style="all:unset;"><div class="nav-option option2">
                         <img src="img/message.png"
                             class="nav-img"
                             alt="dashboard">
-                        <h3> Boite Reception</h3>
+                        <h3> Ajouter Un devis</h3>
+                    </div></a>
+                    <a href="devis_manager.php" style="all:unset;"><div class="nav-option option2">
+                        <img src="img/message.png"
+                            class="nav-img"
+                            alt="dashboard">
+                        <h3> Devis manager</h3>
                     </div></a>
  
                     <a href="edit_profile_admin.php" style="all:unset;"><div class="nav-option option2">
