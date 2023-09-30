@@ -45,7 +45,21 @@ if (isset($_GET['deletIdCat'])) {
 	<style type="text/css">
      th,th{
         padding: 10px 30px;
-     }   
+     }
+    #toggleButton {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    #toggleButton:hover {
+        background-color: #0056b3;
+    }
     </style>
     <script defer src="js/script.js"></script>
 </head>
@@ -193,9 +207,9 @@ if (isset($_GET['deletIdCat'])) {
                 </div>
                 </table>
             </div>
+            <button id="toggleButton">Show/Hide Size Report</button>
 
-
-            <div class="report-container">
+            <div class="report-container" id="sizeReport" style="display: none;">
                 <div class="report-header">
                     <h1 class="recent-Articles">Sizes</h1>
                     <a href="addCat.php"><button class="view" style="width: 150px; margin-right: 40px;">Ajouter Size</button></a>
@@ -227,6 +241,34 @@ if (isset($_GET['deletIdCat'])) {
             </div>
         </div>
     </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const sizeReport = document.getElementById("sizeReport");
+    const toggleButton = document.getElementById("toggleButton");
+
+    // Function to toggle visibility
+    function toggleVisibility() {
+        if (sizeReport.style.display === "none") {
+            sizeReport.style.display = "block";
+        } else {
+            sizeReport.style.display = "none";
+        }
+    }
+
+    // Toggle visibility on button click
+    toggleButton.addEventListener("click", function () {
+        toggleVisibility();
+        // Save the visibility state to localStorage
+        localStorage.setItem("sizeReportVisibility", sizeReport.style.display);
+    });
+
+    // Check localStorage for visibility state on page load
+    const storedVisibility = localStorage.getItem("sizeReportVisibility");
+    if (storedVisibility) {
+        sizeReport.style.display = storedVisibility;
+    }
+});
+</script>
 
 </body>
 </html>
