@@ -33,13 +33,6 @@
                                 <button id="submit" type="submit" class="ibtn" name="ok">Login</button> <a href="forget.php">Forget password?</a>
                             </div>
                         </form>
-                        <div class="other-links">
-                            <div class="text">Or login with</div>
-                            <a href="#"><i class="fab fa-facebook-f"></i>Facebook</a><a href="#"><i class="fab fa-google"></i>Google</a><a href="#">
-                        </div>
-                        <div class="page-links">
-                            <a href="register.php">Register new account</a>
-                        </div>
                     </div>
                 </div>
             </div>
