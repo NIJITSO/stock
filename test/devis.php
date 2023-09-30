@@ -156,7 +156,7 @@ if (mysqli_num_rows($result) > 0) {
         <div class="main">
             <h2>Kteb smit lproduits li baghi tzid o selectionih mli yban lek</h2>   
                 <div id="search">
-        <input type="text" id="searchInput" placeholder="kteb hna smit produit" name="">
+        <input type="text" id="searchInput" placeholder="dir '*' bax yban lek koulxi" name="">
     </div>
     <div id="show_hide_inputs">
         <?php
